@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { auth } from './lib/auth';
 
 export async function middleware(req: NextRequest) {
-  // token取得
-  const token = await getToken({ req });
+  // session取得
+  const session = await auth();
   // あればtrue, なければfalse
-  const isAuth = !!token;
+  const isAuth = !!session;
 
   const isAuthPage = req.nextUrl.pathname.startsWith("/login");
   
