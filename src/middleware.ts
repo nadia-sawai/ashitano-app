@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
   // token取得
-  const token = await req.cookies.get("authjs.session-token")?.value;
+  const token = await getToken({ req });
   // あればtrue, なければfalse
   const isAuth = !!token;
 
