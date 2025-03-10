@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from './lib/auth';
 
 export async function middleware(req: NextRequest) {
-  // session取得
-  const session = await auth();
+  // token取得
+  const token = await req.cookies.get("__Secure-authjs.session-token")?.value;
   // あればtrue, なければfalse
-  const isAuth = !!session;
+  const isAuth = !!token;
 
   const isAuthPage = req.nextUrl.pathname.startsWith("/login");
   

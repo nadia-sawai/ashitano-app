@@ -15,7 +15,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // .envにAUTH_GOOGLE_xx で設定している場合は以下は不要
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      allowDangerousEmailAccountLinking: true,
     }),
   ],
   adapter: PrismaAdapter(prisma),
