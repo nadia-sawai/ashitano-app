@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { Switch } from "@/components/ui/switch"
 
 export default function Create() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [published, setPublished] = useState(false)
 
   return (
     <div className="container flex flex-col justify-center w-screen items-center mx-auto">
@@ -18,7 +20,11 @@ export default function Create() {
           <Input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"/>
           <Label htmlFor="content" className="text-gray-700 text-lg font-medium mt-3 mb-1.5">コンテンツ</Label>
           <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"/>
-          <PostCreateButton className="mt-5" title={title} content={content} />
+          <div className="flex items-center gap-4 py-2">
+            <Label htmlFor="title" className="text-gray-700 text-lg font-medium mb-1.5">公開</Label>
+            <Switch id="published" checked={published} onCheckedChange={(checked) => setPublished(checked)} className="cursor-pointer" />
+            </div>
+          <PostCreateButton className="mt-5" title={title} content={content} published={published} />
         </form>
       </div>
     </div>

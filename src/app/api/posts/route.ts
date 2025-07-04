@@ -5,41 +5,44 @@ import * as z from "zod";
 
 const postCreateSchema = z.object({
   title: z.string().min(1, "タイトルを入力してください"),
-  content: z.string().optional()
+  content: z.string().optional(),
+  published: z.boolean(),
 })
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await auth(); // ✅ 認証情報を取得
+    // 認証確認
+    const session = await auth();
 
     // セッションがない場合
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { user } = session;
-
+    // jsonをパース / バリデーション
     const json = await req.json();
-    // schemaに基づく型チェック
-    const body = postCreateSchema.parse(json);
-    const {title, content} = body;
+    const body = await postCreateSchema.parseAsync(json);
+
     const post = await prisma.post.create({
       data: {
-        title,
-        content,
-        authorId: user.id //認証ユーザーのIDをセット
+        title: body.title,
+        content: body.content,
+        published: body.published,
+        authorId: session.user.id //認証ユーザーのIDをセット
       },
       select: {
         id: true
       }
     })
 
-    return NextResponse.json(post, { status: 201 });
+    return NextResponse.json({id: post.id}, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json(err.issues, { status: 422 });
+      console.error("Validation Error", err.issues);
+      return NextResponse.json({ error: "Validation Error", details: err.issues}, { status: 422 });
     }
     // zodエラー以外は500
-    return NextResponse.json(null, { status: 500 });
+    console.error("Unexpected Error", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

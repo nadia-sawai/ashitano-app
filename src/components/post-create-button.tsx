@@ -1,19 +1,16 @@
 "use client";
 
-import { VariantProps } from "class-variance-authority";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-interface PostCreateButtonProps
-  extends React.ComponentProps<typeof Button>,
-    VariantProps<typeof buttonVariants> {}
+import { PostCreateButtonProps } from "@/types/types";
 
 export default function PostCreateButton({
   className,
   variant,
   size,
+  published,
   ...props
 }:PostCreateButtonProps) {
   const router = useRouter();
@@ -27,14 +24,14 @@ export default function PostCreateButton({
     const response = await fetch("/api/posts", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({title, content})
+      body: JSON.stringify({title, content, published})
     });
 
     setIsLoading(false);
     console.log(response)
     if(response.ok) {
       alert("投稿成功！マイページに遷移します！")
-      router.push("/mypage");  
+      router.push("/mypage");
     } else {
       alert("投稿に失敗しました")
       setError(true)
@@ -47,7 +44,7 @@ export default function PostCreateButton({
     <Button className={cn(className)} disabled={isLoading} variant={variant} size={size} {...props} onClick={handleSubmit}>
       作成
     </Button>
-    {error && <p className="text-red-700">タイトルを入力してね</p>}
+    {error && <p className="text-red-700">項目を入力してね</p>}
   </>
   )
 }
