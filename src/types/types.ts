@@ -6,7 +6,10 @@ export interface IArticle {
   createdAt: Date,
   title: string,
   content: string,
-  published: boolean
+  published: boolean,
+  author?: {
+    name: string | null;
+  }
 }
 
 export interface IArticleFromApi extends IArticle {

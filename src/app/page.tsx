@@ -1,7 +1,18 @@
+"use client";
+import PostsList from "@/components/PostList";
+
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <p>ログインしてない場合はログインしてね</p>
+      <div className="container flex flex-col justify-center w-screen items-center mx-auto">
+        <div className="mx-auto flex flex-col gap-4">
+        <h1 className="text-2xl font-semibold tracking-tight">みんなの投稿一覧</h1>
+
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
+          <PostsList apiUrl="/api/posts/public"/>
+        </div>
+      </div>
     </div>
   );
 }
+
+

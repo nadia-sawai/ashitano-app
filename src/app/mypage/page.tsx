@@ -42,7 +42,7 @@ export default function Mypage() {
 
         <h2 className="font-semibold">ユーザー投稿一覧</h2>
         <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
-          <PostsList />
+          <PostsList apiUrl="/api/posts" />
         </div>
       </div>
     </div>

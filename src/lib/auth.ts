@@ -21,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60,
   },
   callbacks: {
     // cf. https://next-auth.js.org/configuration/callbacks#jwt-callback
@@ -31,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token.email) session.user.email = token.email;
       if (token.picture) session.user.image = token.picture;
       if (token.provider) session.provider = token.provider;
-      
+
       return session;
     },
     async jwt({ token, user, account }) {

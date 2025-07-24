@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 /**
  * 公開されている投稿＋ユーザー名を取得
  */
-export async function getPublicPosts() {
+export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       where: { published: true },
@@ -15,6 +15,7 @@ export async function getPublicPosts() {
         content: true,
         createdAt: true,
         updatedAt: true,
+        published: true,
         author: {
           select: {
             name: true,

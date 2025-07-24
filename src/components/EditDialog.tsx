@@ -60,6 +60,7 @@ export default function EditDialog({...props}:IArticle) {
       setApiMessage(updatedPost.message);
       // リスト再フェッチ
       mutate("/api/posts");
+      mutate("/api/posts/public");
 
     } catch (error) {
       console.error("更新エラー:", error);
