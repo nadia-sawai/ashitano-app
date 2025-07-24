@@ -23,6 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      </head>
       <body className={cn("bg-background antialiased min-h-screen", notoSansJp.className)}>
         <SessionWrapper>
           <Header />
