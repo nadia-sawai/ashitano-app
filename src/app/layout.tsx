@@ -5,12 +5,11 @@ import { cn } from "@/lib/utils";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import Main from "@/components/layout/Main/Main";
-import { SessionProvider } from "next-auth/react";
+import SessionWrapper from "@/components/providers/SessionWrapper"; 
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,16 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={cn("bg-background antialiased min-h-screen", notoSansJp.className)}
-      >
-        <SessionProvider>
+      <body className={cn("bg-background antialiased min-h-screen", notoSansJp.className)}>
+        <SessionWrapper>
           <Header />
-        </SessionProvider>
-        <Main>
-          {children}
-        </Main>
-        <Footer />
+          <Main>
+            {children}
+          </Main>
+          <Footer />
+        </SessionWrapper>
       </body>
     </html>
   );

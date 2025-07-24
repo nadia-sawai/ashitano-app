@@ -12,7 +12,13 @@ export default function Header() {
       <div className={Styles.headerInner}>
         <div className="logo"><Link href="/">logo</Link></div>
         <nav className="flex gap-5 items-center">
-          {session && <Link href="/mypage/create">投稿作成ページへ</Link>}
+          <span>ようこそ {session?.user.name ?? "ゲスト"} さん</span>
+          {session && (
+            <>
+              <Link href="/mypage">マイページ</Link>
+              <Link href="/mypage/create">新規追加</Link>
+            </>
+          )}
           {session ? <Button onClick={() => signOut()} className={cn(buttonVariants({variant: "secondary", size: "sm"}), "px-4")}>ログアウト</Button>
           : <Link href="/login" className={cn(buttonVariants({variant: "secondary", size: "sm"}), "px-4")}>ログイン</Link>
           }
